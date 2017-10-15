@@ -1,34 +1,91 @@
-// ready fxn to let site know to start only when DOM is loaded up 
+$(document).ready(function() {
 
-/*random target number that player has to reach. something like math.floor(math.random)* whatever
-should be between 20 and 120 i think */
-//wins and losses variables
+  var targetScore = 0;
+  var yourScore = 0;
+  var wins = 0;
+  var losses = 0;
+  var bling = {
+    migos: {name: "migos", value: 0},
+    grillz: {name: "grillz", value: 0},
+    ring: {name: "ring", value: 0},
+    watch: {name: "watch", value: 0},
 
-//function to generate random values for each crystal
+  };
+var startRestart = function () {
 
-/*function to reset game after finish
-so need to make score 0 
-gen random target number*/
+  yourScore = 0;
 
-// if else statements for win/lose. show respective win/loss message and reset 
+  targetScore = getRandom(19, 120);
 
-//make win loss display and show on page
+  bling.migos.value = getRandom(1, 12);
+  bling.grillz.value = getRandom(1, 12);
+  bling.ring.value = getRandom(1, 12);
+  bling.watch.value = getRandom(1, 12);
 
-//make crystals appear on page
+  $("#your-score").text(yourScore);
+  $("#target-score").text(targetScore);
 
-//fxn to make number add to current gues number each time crystal clicked
+};
 
-//also fxn to make current guess appear on page
+var getRandom = function(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 
-//if else statement to check if target score reached. somethig like if currentGuess === targetScore then +1 wins. 
-//else currentGuess > target then +1 losses
+};
 
-// make 
-
-
-//on clicks for crystals
+startRestart();
 
 
+
+var referee = function () {
+  if (yourScore > targetScore) {
+    alert("Here hold this L")
+    losses++;
+    $("#loss-count").text(losses)
+    startRestart();
+  }
+
+  else if (yourScore < targetScore ) {
+    console.log("keep trying!")
+  }
+
+  else {
+    alert("WINNER!")
+    wins++;
+    $("win-count").text(wins)
+    startRestart();
+  }
+
+};
+
+var addValues = function(clickedBling) {
+
+  yourScore += clickedBling.value;
+
+ 
+  $("#your-score").text(yourScore);
+
+};
+
+$("#migos").click(function() {
+  addValues(bling.migos);
+  referee();
+});
+
+$("#ring").click(function() {
+  addValues(bling.ring);
+  referee();
+});
+
+$("#grillz").click(function() {
+  addValues(bling.grillz);
+  referee();
+});
+
+$("#watch").click(function() {
+  addValues(bling.watch);
+  referee();
+});
+})
 
 
 
